@@ -17,8 +17,8 @@ class Question < ActiveRecord::Base
 
         end
 
-        binding.pry
-        "juik"
+        # binding.pry
+        # "juik"
     end
 
 end

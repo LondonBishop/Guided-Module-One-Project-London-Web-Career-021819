@@ -5,13 +5,23 @@ require_relative '../config/environment'
 
   quizmaster = Quizmaster.new
 
-  if quizmaster.Start
-      quizmaster.get_user
+  if quizmaster.start
+
+      u1 = quizmaster.load_user
+      cats = Catergory.all
+      binding.pry
       puts "You will get 10 questions on General Knowledge."
       puts "Ready! - Here we go..."
+
+      game1 = Game.create(user_id: u1.id, category_id: 9)
+
+      game1.play
+      
+      binding.pry
+
   else
       puts ""
-      puts "Thank you fro playing QuizMasters!"
+      puts "Thank you for playing Quiz Masters!"
   end
 
   # binding.pry

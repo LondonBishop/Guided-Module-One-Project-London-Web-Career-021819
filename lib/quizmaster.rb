@@ -1,6 +1,6 @@
 class Quizmaster
 
-    def Start
+    def start
 
       puts "
 
@@ -34,18 +34,19 @@ class Quizmaster
 
     end
 
-    def get_user_name
+    def load_user
 
         puts "Enter you User Name"
         result = gets.chomp
 
-        if (User.find_by name: result)
-          put true
-          puts ""
+        u1 = User.find_by_name(result)
 
-        else
+        if u1 == nil
+            u1 = User.create(name: result)
             puts "You user has been created. Please use the User Name next time.."
         end
+
+        return u1
 
     end
 
