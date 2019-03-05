@@ -1,4 +1,5 @@
 require_relative '../config/environment'
+#prompt = TTY::prompt
 
 
   #Setup initial user
@@ -9,16 +10,13 @@ require_relative '../config/environment'
 
       u1 = quizmaster.load_user
       cats = Catergory.all
-      binding.pry
+      # binding.pry
       puts "You will get 10 questions on General Knowledge."
       puts "Ready! - Here we go..."
 
       game1 = Game.create(user_id: u1.id, category_id: 9)
-
       game1.play
       
-      binding.pry
-
   else
       puts ""
       puts "Thank you for playing Quiz Masters!"
