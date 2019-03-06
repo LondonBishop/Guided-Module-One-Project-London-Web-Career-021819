@@ -2,6 +2,8 @@ class Quizmaster
 
     def start
 
+      system ('clear')
+
       puts "
 
    ____  __  ___________      __  ___           __

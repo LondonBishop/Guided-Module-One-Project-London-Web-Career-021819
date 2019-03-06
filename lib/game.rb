@@ -3,10 +3,10 @@ class Game < ActiveRecord::Base
     belongs_to :users
     belongs_to :categories
 
-    def get_random_array
+    def get_random_array(size)
         arr = []
-        while arr.length <= 3
-            random_number = Random.rand(4)
+        while arr.length <= size
+            random_number = Random.rand(size + 1)
             if !(arr.include?(random_number))
                 arr << random_number
             end
@@ -17,25 +17,43 @@ class Game < ActiveRecord::Base
 
     def play
 
+        no_fetch_questions = 50
+        no_quiz_questions = 10
+
         no_of_correct_answers = 0
         question_no = 1
         correct_answer_index = nil
-        orignal_question_array = []
-        final_question_array = [0,0,0,0]
+        orignal_answer_array = []
+        final_answer_array = [0,0,0,0]
+        final_questions = []
 
-        # game_questions = Question.find_by_category_id(self.category_id)
-        game_questions = Question.where(category_id: self.category_id).take(5)
+        system ('clear')
 
-        #randomise the questions
-        game_questions.each do |question|
+        ########################################
+        # Load questions for quiz and randomize
+        ########################################
+        game_questions = Question.where(category_id: self.category_id).take(no_fetch_questions)
 
-              orignal_question_array << question.correct_answer
-              orignal_question_array << question.wrong_answer_1
-              orignal_question_array << question.wrong_answer_2
-              orignal_question_array << question.wrong_answer_3
+        get_random_array(49).each_with_index do |value, index|
+            final_questions[value] = game_questions[index]
+        end
 
-              get_random_array.each_with_index do |value, index|
-                  final_question_array[value] = orignal_question_array[index]
+        final_questions = final_questions.take(no_quiz_questions)
+
+
+
+        ################################################
+        #randomise the answer for a question
+        ################################################
+        final_questions.each do |question|
+
+              orignal_answer_array << question.correct_answer
+              orignal_answer_array << question.wrong_answer_1
+              orignal_answer_array << question.wrong_answer_2
+              orignal_answer_array << question.wrong_answer_3
+
+              get_random_array(3).each_with_index do |value, index|
+                  final_answer_array[value] = orignal_answer_array[index]
                   if index == 0
                       correct_answer_index = value
                   end
@@ -44,38 +62,45 @@ class Game < ActiveRecord::Base
               #binding.pry
 
               #run each question
-              puts ""
-              puts "Question : #{question_no}"
+              system('clear')
+              puts "Question #{question_no} of #{no_quiz_questions}"
               puts question.question
               puts ""
-              puts "1. #{final_question_array[0]}"
-              puts "2. #{final_question_array[1]}"
-              puts "3. #{final_question_array[2]}"
-              puts "4. #{final_question_array[3]}"
+              puts "1. #{final_answer_array[0]}"
+              puts "2. #{final_answer_array[1]}"
+              puts "3. #{final_answer_array[2]}"
+              puts "4. #{final_answer_array[3]}"
               puts ""
               puts "Enter your answer [1..4]"
 
               question_no = question_no + 1
               answer = gets.chomp
 
-
-
               if answer.to_i == (correct_answer_index + 1)
-                  puts "CORRECT!"
+                  puts "**** CORRECT! *****"
                   no_of_correct_answers =  no_of_correct_answers + 1
               else
-                  puts "Sorry - that's the wrong answer..."
+                  puts ""
+                  puts "Sorry - that's the WRONG answer..."
+                  puts "The answer is --> #{correct_answer_index + 1}. #{final_answer_array[correct_answer_index]}"
               end
+
+              puts ""
+              puts "press any key for next question"
+              gets.chomp
 
               # binding.pry
 
               #reset arrays
-              orignal_question_array =[]
-              final_question_array = []
+              orignal_answer_array =[]
+              final_answer_array = []
 
         end
 
-        puts "Total Score is: #{no_of_correct_answers} out of 5"
+        system ('clear')
+        puts "*********** FINAL SCORE ***************"
+        puts "Total Score is: #{no_of_correct_answers} out of #{no_quiz_questions}"
+        puts "***************************************"
         #binding.pry
     end
 end
