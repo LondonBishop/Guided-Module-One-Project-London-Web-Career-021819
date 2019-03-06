@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
 
     belongs_to :users
-    belongs_to :catergories
+    belongs_to :categories
 
     def get_random_array
         arr = []
@@ -34,19 +34,8 @@ class Game < ActiveRecord::Base
               orignal_question_array << question.wrong_answer_2
               orignal_question_array << question.wrong_answer_3
 
-
-              # arr = []
-              # while arr.length <= 3
-              #     random_number = Random.rand(4)
-              #     if !(arr.include?(random_number))
-              #         arr << random_number
-              #     end
-              # end
-
               get_random_array.each_with_index do |value, index|
                   final_question_array[value] = orignal_question_array[index]
-                  # puts "value #{value}"
-                  # puts "index #{index}"
                   if index == 0
                       correct_answer_index = value
                   end

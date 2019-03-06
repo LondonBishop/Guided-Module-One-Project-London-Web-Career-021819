@@ -1,4 +1,4 @@
-class Catergory < ActiveRecord::Base
+class Category < ActiveRecord::Base
 
     has_many :games
     has_many :questions

@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20190305091953) do
 
-  create_table "catergories", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_on"
     t.datetime "updated_on"
