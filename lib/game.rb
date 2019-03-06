@@ -102,5 +102,27 @@ class Game < ActiveRecord::Base
         puts "Total Score is: #{no_of_correct_answers} out of #{no_quiz_questions}"
         puts "***************************************"
         #binding.pry
+
+        return no_of_correct_answers
+
     end
+
+
+    def self.put_top_score_table
+
+        #SELECT users.name, games.score from users JOIN games ON users.id = games.user_id ORDER BY games.score DESC
+
+         score_arr = User.all.map do |user|
+          {name: user.name, score: user.games.max_by{|game|game.score}.score}
+          end
+
+        score_arr = score_arr.sort_by {|userscore| userscore["score"]}
+
+        score_arr.each do |userscore|
+          puts "Name: #{userscore[:name]}  Score : #{userscore[:score]}"
+        end
+
+    end
+
+
 end

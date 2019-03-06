@@ -11,12 +11,22 @@ require_relative '../config/environment'
       u1 = quizmaster.load_user
       cats = Category.all
 
+      #binding.pry
+
       # binding.pry
       puts "You will get 10 questions on General Knowledge."
       puts "Ready! - Here we go..."
 
       game1 = Game.create(user_id: u1.id, category_id: 9)
-      game1.play
+      game1.score = game1.play
+
+      #update score for user
+      game1.user_id = u1.id
+      game1.category_id = 9
+      game1.save
+
+      Game.put_top_score_table
+
 
   else
       puts ""

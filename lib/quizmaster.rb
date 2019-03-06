@@ -46,6 +46,7 @@ class Quizmaster
         if u1 == nil
             u1 = User.create(name: result)
             puts "You user has been created. Please use the User Name next time.."
+            sleep 0.75
         end
 
         return u1

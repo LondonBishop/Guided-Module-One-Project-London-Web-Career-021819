@@ -4,6 +4,8 @@ class Question < ActiveRecord::Base
 
     def self.get_questions(category)
 
+        wronganswers =[]
+
         response = RestClient.get("https://opentdb.com/api.php?amount=50&category=#{category}&difficulty=medium&type=multiple")
         data = JSON.parse(response)
 
@@ -14,10 +16,20 @@ class Question < ActiveRecord::Base
                   #tidy up question data - remove irregular chars
                   clean_question = Nokogiri::HTML.parse(d["question"]).children.text
 
-                  #load answers
-                  wronganswers = d["incorrect_answers"]
+                  ###### load answers ######
+                  d["incorrect_answers"].each do |answer|
+                      wronganswers << Nokogiri::HTML.parse(answer).children.text
+                  end
+
+                  d["correct_answer"] = Nokogiri::HTML.parse(d["correct_answer"]).children.text
+                  #############
+
+
                   Question.create(category_id: category, question: clean_question, correct_answer: d["correct_answer"], wrong_answer_1: wronganswers[0],
                     wrong_answer_2: wronganswers[1], wrong_answer_3: wronganswers[2])
+
+                  wronganswers =[]
+
               end
 
         end
