@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190305091953) do
+ActiveRecord::Schema.define(version: 20190307112750) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20190305091953) do
     t.integer  "score"
     t.datetime "created_on"
     t.datetime "updated_on"
+    t.float    "timetaken"
   end
 
   create_table "questions", force: :cascade do |t|

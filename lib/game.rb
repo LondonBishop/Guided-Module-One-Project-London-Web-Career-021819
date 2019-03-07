@@ -3,6 +3,7 @@ class Game < ActiveRecord::Base
     belongs_to :users
     belongs_to :categories
 
+
     def get_random_array(size)
         arr = []
         while arr.length <= size
@@ -16,6 +17,9 @@ class Game < ActiveRecord::Base
 
 
     def play
+
+        game_time = Time.now
+        start_time = game_time.nsec
 
         no_fetch_questions = 50
         no_quiz_questions = 10
@@ -106,7 +110,9 @@ class Game < ActiveRecord::Base
         puts ""
 
         sleep 0.95
-        #binding.pry
+
+
+        @timetaken = (Time.now.nsec - start_time) % 100000000
 
         return no_of_correct_answers
 
@@ -133,6 +139,8 @@ class Game < ActiveRecord::Base
           puts "----                   -----"
           new_score_arr.each { |v| puts "#{scorenumber}.#{v[:name].ljust(20)} #{v[:score]}" }
           puts "----------------------------"
+          puts ""
+          puts ""
 
     end
 

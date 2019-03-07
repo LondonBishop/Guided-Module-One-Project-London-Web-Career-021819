@@ -15,8 +15,11 @@ class Quizmaster
 
 "
 
-      puts "Welcome to QuizMasters!"
-      puts "How good is your Knowledge?"
+      puts "****** Welcome to QuizMasters! ******"
+      puts ""
+      puts "    How good is your Knowledge?"
+      puts ""
+      puts "*************************************"
       puts ""
       puts "Please enter (Y)- to Start Quiz (N) - Exit)"
 

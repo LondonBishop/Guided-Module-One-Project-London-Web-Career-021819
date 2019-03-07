@@ -16,7 +16,7 @@
     Category.create(id: 27, name: "Animals")
 
     #create question data
-    Question.get_questions("9")
+    Question.2("9")
     Question.get_questions("21")
     Question.get_questions("22")
     Question.get_questions("23")

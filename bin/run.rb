@@ -17,12 +17,15 @@ require_relative '../config/environment'
             puts "Ready! - Here we go..."
 
             game1 = Game.create(user_id: u1.id, category_id: 9)
+
             game1.score = game1.play
 
             ### Update score for user
             game1.user_id = u1.id
             game1.category_id = 9
             game1.save
+
+            #puts game1.timetaken
 
             ### Output league table.
             Game.put_top_score_table
