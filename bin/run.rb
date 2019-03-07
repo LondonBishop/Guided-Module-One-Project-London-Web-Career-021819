@@ -2,8 +2,8 @@ require_relative '../config/environment'
 #prompt = TTY::prompt
 
 
-  # Game.put_top_score_table
-  # binding.pry
+  #Game.put_top_score_table
+  #binding.pry
 
       quizmaster = Quizmaster.new
 

@@ -41,7 +41,6 @@ class Game < ActiveRecord::Base
         final_questions = final_questions.take(no_quiz_questions)
 
 
-
         ################################################
         #randomise the answer for a question
         ################################################
@@ -99,9 +98,14 @@ class Game < ActiveRecord::Base
         end
 
         system ('clear')
-        puts "*********** FINAL SCORE ***************"
+        puts ""
+        puts "-------* FINAL SCORE *------"
         puts "Total Score is: #{no_of_correct_answers} out of #{no_quiz_questions}"
-        puts "***************************************"
+        puts "----------------------------"
+        puts ""
+        puts ""
+
+        sleep 0.95
         #binding.pry
 
         return no_of_correct_answers
@@ -116,15 +120,14 @@ class Game < ActiveRecord::Base
           #SELECT users.name, games.score from users JOIN games ON users.id = games.user_id ORDER BY games.score DESC
 
           score_arr = User.all.map do |user|
-                {name: user.name,
-                 score: user.games.max_by{|game|game.score}.score}
+                {name: user.name,score: user.games.max_by{|game|game.score}.score}
           end
 
           ####### Output League Table.######
           new_score_arr = score_arr.sort_by {|userscore| userscore[:score]}.reverse
 
-          puts "============================="
-          puts "------- LEAGUE TABLE --------"
+          puts "============================"
+          puts "------- LEAGUE TABLE -------"
 
           puts "Name                   Score"
           puts "----                   -----"
