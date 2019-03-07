@@ -32,7 +32,7 @@ class Game < ActiveRecord::Base
         ########################################
         # Load questions for quiz and randomize
         ########################################
-        game_questions = Question.where(category_id: self.category_id).take(no_fetch_questions)
+        game_questions = Question.where(category_id: "#{self.category_id} OR 17 OR 27").take(no_fetch_questions)
 
         get_random_array(49).each_with_index do |value, index|
             final_questions[value] = game_questions[index]
@@ -85,9 +85,10 @@ class Game < ActiveRecord::Base
                   puts "The answer is --> #{correct_answer_index + 1}. #{final_answer_array[correct_answer_index]}"
               end
 
-              puts ""
-              puts "press any key for next question"
-              gets.chomp
+              # puts ""
+              # puts "Press ANY key for next question"
+              # gets.chomp
+              sleep 0.95
 
               # binding.pry
 
@@ -110,17 +111,25 @@ class Game < ActiveRecord::Base
 
     def self.put_top_score_table
 
-        #SELECT users.name, games.score from users JOIN games ON users.id = games.user_id ORDER BY games.score DESC
+        scorenumber = 1
 
-         score_arr = User.all.map do |user|
-          {name: user.name, score: user.games.max_by{|game|game.score}.score}
+          #SELECT users.name, games.score from users JOIN games ON users.id = games.user_id ORDER BY games.score DESC
+
+          score_arr = User.all.map do |user|
+                {name: user.name,
+                 score: user.games.max_by{|game|game.score}.score}
           end
 
-        score_arr = score_arr.sort_by {|userscore| userscore["score"]}
+          ####### Output League Table.######
+          new_score_arr = score_arr.sort_by {|userscore| userscore[:score]}.reverse
 
-        score_arr.each do |userscore|
-          puts "Name: #{userscore[:name]}  Score : #{userscore[:score]}"
-        end
+          puts "============================="
+          puts "------- LEAGUE TABLE --------"
+
+          puts "Name                   Score"
+          puts "----                   -----"
+          new_score_arr.each { |v| puts "#{scorenumber}.#{v[:name].ljust(20)} #{v[:score]}" }
+          puts "----------------------------"
 
     end
 
